@@ -1,4 +1,4 @@
-import MessageBar from "./MessageBar";
+import MessageBarSkeleton from "./MessageBarSkeleton";
 import { Skeleton } from "@mui/material";
 
 const ConversationSkeleton = ()=>{
@@ -45,7 +45,7 @@ const ConversationSkeleton = ()=>{
                 </div>
             </div>
             <div className="p-3">
-                <MessageBar/>
+                <MessageBarSkeleton/>
             </div>
         </div>
     )

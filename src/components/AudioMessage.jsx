@@ -1,16 +1,15 @@
 import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const ImageMessage = ({own, imagePath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
+const AudioMessage = ({own, audioPath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
     var image = !avartarImage ? "./img/no-avartar.jpg" : CheckValidHttpUrl(avartarImage) ? avartarImage : `${process.env.REACT_APP_BASEURL}${avartarImage}`
     return(
         <div className={`${own?"flex-row-reverse":"flex-row"} justify-start flex w-full px-2 gap-1 group/message`}>
             <div className={`${own?"hidden":""} h-7 w-7 rounded-full mt-auto`}>
                 <img className="rounded-full" src={image} alt="" />
             </div>
-
-            <div className="max-w-4/5 max-h-4/5 rounded-xl">
-                <img className="rounded-xl" src={imagePath} alt="imagePath" loading="lazy"/>
-            </div>
+            <audio src={audioPath} controls loading="lazy">
+                Your browser does not support the audio tag.
+            </audio>
             <div className="flex flex-row my-auto invisible group-hover/message:visible">
                 <p className="text-[10px] opacity-60 text-center">{sendAt.slice(0, 10)}<br/>{sendAt.slice(11, 19)}</p>
                 <button className={`${own?"hidden":""} relative group/react`}>
@@ -43,4 +42,4 @@ const ImageMessage = ({own, imagePath, avartarImage, conversationId, messageId, 
     )
 }
 
-export default ImageMessage
+export default AudioMessage

@@ -1,15 +1,18 @@
+import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const TextMessage = ({own, text})=>{
+const TextMessage = ({own, text, avartarImage, messageTheme, conversationId, messageId, DeleteMessage, sendAt})=>{
+    var image = !avartarImage ? "./img/no-avartar.jpg" : CheckValidHttpUrl(avartarImage) ? avartarImage : `${process.env.REACT_APP_BASEURL}${avartarImage}`
     return(
         <div className={`${own?"flex-row-reverse":"flex-row"} justify-start flex w-full px-2 gap-1 group/message`}>
             <div className={`${own?"hidden":""} h-7 w-7 rounded-full mt-auto`}>
-                <img className="rounded-full" src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/328097787_874699693600447_5635369882371182867_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=jpu1IL4fH2YAX9wypzu&_nc_ht=scontent.fsgn13-2.fna&oh=00_AfDbQhqQwZUf_eOuejrkePpMbe-uosC1zhhfvhhOUFIMRQ&oe=645C5FCF" alt="" />
+                <img className="rounded-full" src={image} alt="" />
             </div>
-            <p className={`${own?"bg-slate-500":"bg-red-400"} text-sm p-2 rounded-2xl max-w-4/5 h-fit min-w-0 break-all`} 
+            <p className={`${own? messageTheme?.ownMessageColor : messageTheme?.friendMessageColor} text-sm p-2 rounded-2xl max-w-4/5 h-fit min-w-0 break-all`} 
                 style={{wordWrap: "break-word"}}>
                     {text}
             </p>
             <div className="flex flex-row my-auto invisible group-hover/message:visible">
+                <p className="text-[10px] opacity-60 text-center">{sendAt.slice(0, 10)}<br/>{sendAt.slice(11, 19)}</p>
                 <button className={`${own?"hidden":""} relative group/react`}>
                     <div className="absolute bottom-6 right-[-36px] border-2 hidden group-focus/react:flex z-10 rounded-xl flex-row gap-1 bg-white">
                         <div className="hover:bg-slate-200 rounded-lg">❣️</div>
@@ -23,7 +26,11 @@ const TextMessage = ({own, text})=>{
                 </button>
                 <button className={`${own?"":""} relative group/moreopts`}>
                     <div className="absolute bottom-6 right-[-12px] w-14 border-2 hidden group-focus/moreopts:block z-10 rounded-xl bg-white">
-                        <div className={`${own?"":"hidden"} hover:bg-slate-200 rounded-lg`}>Delele</div>
+                        <div className={`${own?"":"hidden"} hover:bg-slate-200 rounded-lg`}
+                            onClick={()=>{
+                                DeleteMessage(conversationId, messageId)
+                            }}  
+                        >Delele</div>
                         <div className="hover:bg-slate-200 rounded-lg">Pin</div>
                     </div>
                     <svg className="w-5 h-5 opacity-50 hover:bg-slate-300 rounded-full p-0.5 box-content" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

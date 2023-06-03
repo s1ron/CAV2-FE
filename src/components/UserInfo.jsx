@@ -1,15 +1,21 @@
 import { useState } from "react";
+import CurrentUserDetailOverlay from "./CurrentUserDetailOverlay";
 import UserDetailOverlay from "./UserDetailOverlay";
 import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const UserInfo = ({data})=>{
+const UserInfo = ({data, DisconnectWS, ChangeAvatarImage})=>{
 
     const [isUserInfoCardOpen, SetUserInfoCardOpen] = useState(false);
     const imageAvartar = !data?.profileImagePath ? "./img/no-avartar.jpg" : CheckValidHttpUrl(data?.profileImagePath) ? data?.profileImagePath : `${process.env.REACT_APP_BASEURL}${data?.profileImagePath}`
 
     return(
         <>
-            {isUserInfoCardOpen && <UserDetailOverlay user={data} openState={SetUserInfoCardOpen}/>}
+            {isUserInfoCardOpen && <UserDetailOverlay 
+                openState={SetUserInfoCardOpen}
+                DisconnectWS={DisconnectWS}
+                friendId={data.userId}
+                ChangeAvatarImage={ChangeAvatarImage}
+            />}
             <div className="items-center p-2 m-1 box-content h-12 bg-transparent hover:bg-white rounded-3xl flex flex-row cursor-pointer"
                 onClick={()=>{
                     SetUserInfoCardOpen(!isUserInfoCardOpen)

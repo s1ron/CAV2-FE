@@ -1,6 +1,6 @@
 import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const ImageMessage = ({own, imagePath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
+const VideoMessage = ({own, videoPath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
     var image = !avartarImage ? "./img/no-avartar.jpg" : CheckValidHttpUrl(avartarImage) ? avartarImage : `${process.env.REACT_APP_BASEURL}${avartarImage}`
     return(
         <div className={`${own?"flex-row-reverse":"flex-row"} justify-start flex w-full px-2 gap-1 group/message`}>
@@ -8,8 +8,10 @@ const ImageMessage = ({own, imagePath, avartarImage, conversationId, messageId, 
                 <img className="rounded-full" src={image} alt="" />
             </div>
 
-            <div className="max-w-4/5 max-h-4/5 rounded-xl">
-                <img className="rounded-xl" src={imagePath} alt="imagePath" loading="lazy"/>
+            <div className="max-w-4/5 max-h-max rounded-xl">
+                <video src={videoPath} controls loading="lazy">
+                    Your browser does not support the video tag.
+                </video>
             </div>
             <div className="flex flex-row my-auto invisible group-hover/message:visible">
                 <p className="text-[10px] opacity-60 text-center">{sendAt.slice(0, 10)}<br/>{sendAt.slice(11, 19)}</p>
@@ -43,4 +45,4 @@ const ImageMessage = ({own, imagePath, avartarImage, conversationId, messageId, 
     )
 }
 
-export default ImageMessage
+export default VideoMessage

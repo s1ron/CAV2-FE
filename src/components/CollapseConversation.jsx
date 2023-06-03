@@ -1,4 +1,3 @@
-//const CollapseConversation = ({name, lastMessage, timeLastMess,imgPath,isCurrent, isOnline, handleClick})=>{
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import { CheckValidHttpUrl } from '../constant/CheckValidHttpUrl';
@@ -14,7 +13,7 @@ const CollapseConversation = ({data, clickState, currentConversationId, isOnline
             conversationName : data.conversationName,
             imagePath : data.conversationImagePath,
             isBlock : data.isBlock,
-            lastMessgae: data.lastMessage == null ? "" : data.lastMessage.content,
+            lastMessage: data.lastMessage == null ? "" : data.lastMessage.messageType === "DELETED" ? "Deleted message" : data.lastMessage.content,
             timelastMessage : data.lastMessage == null ? "" : data.lastMessage.sendAt,
         }
     }else{
@@ -24,7 +23,7 @@ const CollapseConversation = ({data, clickState, currentConversationId, isOnline
             conversationName : par.nickName == null ? par.firstName + ' ' + par.lastName : par.nickName,
             imagePath : !par.profileImagePath ? "./img/no-avartar.jpg" : CheckValidHttpUrl(par.profileImagePath) ? par.profileImagePath : `${process.env.REACT_APP_BASEURL}${par.profileImagePath}`,
             isBlock : data.isBlock,
-            lastMessgae: data.lastMessage == null ? "" : data.lastMessage.content,
+            lastMessage: data.lastMessage == null ? "" : data.lastMessage.messageType === "DELETED" ? "Deleted message" : data.lastMessage.content,
             timelastMessage : data.lastMessage == null ? "" : data.lastMessage.sendAt,
         }
     }
@@ -39,11 +38,14 @@ const CollapseConversation = ({data, clickState, currentConversationId, isOnline
             </div>
             <div className="w-12 grow flex flex-col opacity-70 pl-3">
                 <h4 className="leading-4 font-bold whitespace-nowrap text-ellipsis overflow-hidden">{conversationData.conversationName}</h4>   
-                <p className="leading-4 text-sm whitespace-nowrap text-ellipsis overflow-hidden w-full">{conversationData.lastMessgae}</p> 
+                <p className="leading-4 text-sm whitespace-nowrap text-ellipsis overflow-hidden w-full">{`${data?.lastMessage?.senderId === userId ? "You: " : ""}${conversationData.lastMessage}`}</p> 
             </div>
-            <div className="mr-0 w-10 opacity-70">
-                <span className="text-xs">{GetTimeDiffToString(conversationData.timelastMessage)}</span>
-            </div>
+
+            {data.lastMessage &&
+                <div className="mr-0 w-10 opacity-70">
+                    <span className="text-xs">{GetTimeDiffToString(conversationData.timelastMessage)}</span>
+                </div>
+            }
         </div>
     )
 }
@@ -54,10 +56,9 @@ const GetTimeDiffToString = (date) => {
     const diff = (now - a) / 1000;
     if(a.getDate() === now.getDate()){
         if(diff < 3600) return `${(diff/60).toFixed()} min ago`;
-        console.log(diff, a);
         return `${(diff/3600).toFixed()} hour ago`
     }
-    if(diff/(3600*24) <= 7) return `${(diff/(3600*24)).toFixed()} day ago`
+    if(diff/(3600*24) <= 7) return `${(diff/(3600*24)).toFixed()+1} day ago`
 
     return `${a.getDate()} / ${a.getMonth()}`
 }
