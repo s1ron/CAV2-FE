@@ -140,108 +140,82 @@ const Conversation = ({onlineFriends, isMobileCOnversationOpen,
                                 case "TEXT":
                                     return(
                                         <TextMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            text={message.content}
                                             messageTheme={firstMessageData?.conversationTheme}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "IMAGE":
                                     return(
                                         <ImageMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            imagePath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "VIDEO":
                                     return(
                                         <VideoMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            videoPath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
-                                            avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "AUDIO":
                                     return(
                                         <AudioMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            audioPath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "FILE":
                                     return(
                                         <FileMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            filename={message.content}
-                                            filePath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            fileSize={message.fileSize}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "QUICK":
                                     return(
                                         <QuickMessage
-                                            own={userId === message.senderId}
                                             key={index}
-                                            avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            imagePath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "GIF":
                                     return(
                                         <GifMessage
-                                            own={userId === message.senderId}
                                             key={index}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            imagePath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "STICKER":
                                     return(
                                         <StickerMessage
-                                            own={userId === message.senderId}
                                             key={index}
                                             avartarImage={firstMessageData.participantUser.find(x=>x.userId === message.senderId)?.profileImagePath}
-                                            imagePath={`${process.env.REACT_APP_BASEURL}${message.filePath}`}
-                                            conversationId={message.conversationId}
-                                            messageId={message.id}
                                             DeleteMessage={DeleteMessage}
-                                            sendAt={message.sendAt}
+                                            message={message}
+                                            userId={userId}
                                         />
                                     )
                                 case "SYSTEM":

@@ -1,6 +1,7 @@
 import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const FileMessage = ({own, filename, fileSize, filePath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
+const FileMessage = ({avartarImage, DeleteMessage, message, userId})=>{
+    var own = message?.senderId === userId
     var image = !avartarImage ? "./img/no-avartar.jpg" : CheckValidHttpUrl(avartarImage) ? avartarImage : `${process.env.REACT_APP_BASEURL}${avartarImage}`
     return(
         <div className={`${own?"flex-row-reverse":"flex-row"} justify-start flex w-full px-2 gap-1 group/message`}>
@@ -13,15 +14,15 @@ const FileMessage = ({own, filename, fileSize, filePath, avartarImage, conversat
                 <div className="flex flex-col p-1">
                     <p className={`text-sm break-all`} 
                         style={{wordWrap: "break-word"}}>
-                            {filename}
+                            {message.content}
                     </p>
-                    <p className="text-xs break-all">{fileSize}kb</p>
+                    <p className="text-xs break-all">{message.fileSize}kb</p>
                 </div>
                 <svg className="cursor-pointer w-6 h-6 my-auto hover:bg-white rounded-full p-1 box-content" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                     onClick={()=>{
                         const link = document.createElement('a')
-                        link.href = filePath
-                        link.download = filename
+                        link.href = `${process.env.REACT_APP_BASEURL}${message.filePath}`
+                        link.download = message.content
                         link.click()
                     }}
                 >
@@ -29,7 +30,7 @@ const FileMessage = ({own, filename, fileSize, filePath, avartarImage, conversat
                 </svg>
             </div>
             <div className="flex flex-row my-auto invisible group-hover/message:visible">
-                <p className="text-[10px] opacity-60 text-center">{sendAt.slice(0, 10)}<br/>{sendAt.slice(11, 19)}</p>
+                <p className="text-[10px] opacity-60 text-center">{message.sendAt.slice(0, 10)}<br/>{message.sendAt.slice(11, 19)}</p>
                 <button className={`${own?"hidden":""} relative group/react`}>
                     <div className="absolute bottom-6 right-[-36px] border-2 hidden group-focus/react:flex z-10 rounded-xl flex-row gap-1 bg-white">
                         <div className="hover:bg-slate-200 rounded-lg">❣️</div>
@@ -45,7 +46,7 @@ const FileMessage = ({own, filename, fileSize, filePath, avartarImage, conversat
                     <div className="absolute bottom-6 right-[-12px] w-14 border-2 hidden group-focus/moreopts:block z-10 rounded-xl bg-white">
                         <div className={`${own?"":"hidden"} hover:bg-slate-200 rounded-lg`}
                             onClick={()=>{
-                                DeleteMessage(conversationId, messageId)
+                                DeleteMessage(message.conversationId, message.id)
                             }}
                         >Delele</div>
                         <div className="hover:bg-slate-200 rounded-lg">Pin</div>

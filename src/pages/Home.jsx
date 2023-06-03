@@ -440,10 +440,8 @@ const Home = ()=>{
                 }
                 return data
             })
-            console.log(indexchange);
             if(indexchange !== 0){
                 const item = update.splice(indexchange, 1)[0];
-                console.log(indexchange);
                 return ([item,...update])
             }
             return ([...update]);

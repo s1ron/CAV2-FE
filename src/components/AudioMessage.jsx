@@ -1,17 +1,18 @@
 import { CheckValidHttpUrl } from "../constant/CheckValidHttpUrl";
 
-const AudioMessage = ({own, audioPath, avartarImage, conversationId, messageId, DeleteMessage, sendAt})=>{
+const AudioMessage = ({avartarImage, DeleteMessage, message, userId})=>{
+    var own = message?.senderId === userId
     var image = !avartarImage ? "./img/no-avartar.jpg" : CheckValidHttpUrl(avartarImage) ? avartarImage : `${process.env.REACT_APP_BASEURL}${avartarImage}`
     return(
         <div className={`${own?"flex-row-reverse":"flex-row"} justify-start flex w-full px-2 gap-1 group/message`}>
             <div className={`${own?"hidden":""} h-7 w-7 rounded-full mt-auto`}>
                 <img className="rounded-full" src={image} alt="" />
             </div>
-            <audio src={audioPath} controls loading="lazy">
+            <audio src={`${process.env.REACT_APP_BASEURL}${message.filePath}`} controls loading="lazy">
                 Your browser does not support the audio tag.
             </audio>
             <div className="flex flex-row my-auto invisible group-hover/message:visible">
-                <p className="text-[10px] opacity-60 text-center">{sendAt.slice(0, 10)}<br/>{sendAt.slice(11, 19)}</p>
+                <p className="text-[10px] opacity-60 text-center">{message.sendAt.slice(0, 10)}<br/>{message.sendAt.slice(11, 19)}</p>
                 <button className={`${own?"hidden":""} relative group/react`}>
                     <div className="absolute bottom-6 right-[-36px] border-2 hidden group-focus/react:flex z-10 rounded-xl flex-row gap-1 bg-white">
                         <div className="hover:bg-slate-200 rounded-lg">❣️</div>
@@ -27,7 +28,7 @@ const AudioMessage = ({own, audioPath, avartarImage, conversationId, messageId, 
                     <div className="absolute bottom-6 right-[-12px] w-14 border-2 hidden group-focus/moreopts:block z-10 rounded-xl bg-white">
                         <div className={`${own?"":"hidden"} hover:bg-slate-200 rounded-lg`}
                             onClick={()=>{
-                                DeleteMessage(conversationId, messageId)
+                                DeleteMessage(message.conversationId, message.id)
                             }}
                         >Delele</div>
                         <div className="hover:bg-slate-200 rounded-lg">Pin</div>
